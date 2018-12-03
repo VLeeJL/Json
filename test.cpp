@@ -110,9 +110,9 @@ static void test_parse_number()
 
 static void test_parse_string()
 {
-//	TEST_STRING("", "\"\"");
+	TEST_STRING("", "\"\"");
 	TEST_STRING("Hello", "\"Hello\"");
-#if 0
+#if 1
 	TEST_STRING("Hello\nWorld", "\"Hello\\nWorld\"");
     TEST_STRING("\" \\ / \b \f \n \r \t", "\"\\\" \\\\ \\/ \\b \\f \\n \\r \\t\"");
 #endif
@@ -173,19 +173,19 @@ static void test_parse_missing_quotation_mark() {
 
 static void test_parse_invalid_string_escape()
 {
-#if 0
-	TEST_ERROR(LEPT_PARSE_INVALID_STRING_ESCAPE, "\"\\v\"");
-    TEST_ERROR(LEPT_PARSE_INVALID_STRING_ESCAPE, "\"\\'\"");
-    TEST_ERROR(LEPT_PARSE_INVALID_STRING_ESCAPE, "\"\\0\"");
-    TEST_ERROR(LEPT_PARSE_INVALID_STRING_ESCAPE, "\"\\x12\"");
+#if 1
+	TEST_ERROR(lept::PARSE_INVALID_STRING_ESCAPE, "\"\\v\"");
+    TEST_ERROR(lept::PARSE_INVALID_STRING_ESCAPE, "\"\\'\"");
+    TEST_ERROR(lept::PARSE_INVALID_STRING_ESCAPE, "\"\\0\"");
+    TEST_ERROR(lept::PARSE_INVALID_STRING_ESCAPE, "\"\\x12\"");
 #endif
 }
 
 static void test_parse_invalid_string_char()
 {
-#if 0
-	TEST_ERROR(LEPT_PARSE_INVALID_STRING_CHAR, "\"\x01\"");
-    TEST_ERROR(LEPT_PARSE_INVALID_STRING_CHAR, "\"\x1F\"");
+#if 1
+	TEST_ERROR(lept::PARSE_INVALID_STRING_CHAR, "\"\x01\"");
+    TEST_ERROR(lept::PARSE_INVALID_STRING_CHAR, "\"\x1F\"");
 #endif
 }
 
@@ -267,3 +267,7 @@ int main()
 	printf("%d/%d (%3.2f%%) passed\n", test_pass, test_count, test_pass * 100.0 / test_count);
 	return main_ret;
 }
+
+/*字节序，即字节在电脑中存放时的序列与输入（输出）时的序列是先到的在前还是后到的在前。
+ *
+ */
