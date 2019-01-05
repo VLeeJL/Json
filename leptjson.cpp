@@ -120,13 +120,41 @@ static lept::PARSE_STATE parse_string(JsonContext& jsonContext, lept::JsonValue&
 				jsonContext.jsonStr_ = p;
 				return lept::PARSE_OK;
 			}
+			case '\\':
+			{
+				switch (*p++)
+				{
+					case '\"': PUTC(jsonContext, '\"'); break;//quotation mark
+					case '\\': PUTC(jsonContext, '\\'); break;//reverse solidus
+					case '/': PUTC(jsonContext, '/'); break;//solidus
+					case 'b': PUTC(jsonContext, '\b'); break;//backspace
+					case 'f': PUTC(jsonContext, '\f'); break;//form feed
+					case 'n': PUTC(jsonContext, '\n'); break;//line feed
+					case 'r': PUTC(jsonContext, '\r'); break;//carriage return
+					case 't': PUTC(jsonContext, '\t'); break;//tab
+					default:
+					{
+						jsonContext.topStack_ = head;
+						return lept::PARSE_INVALID_STRING_ESCAPE;
+					}
+				}
+				break;
+			}
 			case '\0':
 			{
 				jsonContext.topStack_ = head;
 				return lept::PARSE_MISS_QUOTATION_MARK;
 			}
 			default:
+			{
+				if (static_cast<unsigned char>(ch) < 0x20)
+				{
+					jsonContext.topStack_ = head;
+					return lept::PARSE_INVALID_STRING_CHAR;
+				}
 				PUTC(jsonContext, ch);
+				break;
+			}
 		}
 	}
 }
